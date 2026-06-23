@@ -2,12 +2,12 @@
 
 Recibe noticias, novedades y promociones exclusivas.
 
-## ¿Por qué suscribirte?
+## ¿Qué recibirás?
 
 - Información útil
-- Ofertas especiales
 - Novedades antes que nadie
+- Promociones especiales
 
-### Déjanos tu correo
+## Déjanos tu correo
 
 Próximamente disponible
