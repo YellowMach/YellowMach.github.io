@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -351,6 +351,9 @@
             <span>He leído y acepto la <a href="https://www.ibergruasjcb.com/politica-de-privacidad/" target="_blank" rel="noopener">política de privacidad</a> y el tratamiento de mis datos para recibir comunicaciones comerciales de Ibergruas.</span>
           </label>
 
+          <!-- Campo antispam oculto (honeypot): las personas no lo ven; los bots lo rellenan -->
+          <input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; opacity:0; height:0; width:0;" />
+
           <p class="secure">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
@@ -421,14 +424,21 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Formulario FICTICIO de momento: valida y muestra el agradecimiento.
-    // Cuando conectemos MailerLite o Brevo, solo cambiaremos esta parte.
+    // Conexión con Brevo: envía la suscripción y se queda en tu página.
+    var BREVO_ACTION = "https://c9004d9c.sibforms.com/serve/MUIFAFc8eaOgbNu5l-O3rARdj8Dow_vdG2HsNE8KOG9G8QpYLhj3RfSegveaCiGt1r58d1mEcf-_GP7qfRdd8o04re_nE0LUdeVzDfQMxfG_OJTioZBuVg4rC0lhgzmzL7KsgrWBGwXyKTZvWPRraeqxfuu_TZBbdhvUsH8KY1GJLapGV7HJv30vEOe45A1tHwpE88XKrCTX2atGfQ==";
+
     var form = document.getElementById('subscribeForm');
     var errorEl = document.getElementById('formError');
+    var submitBtn = form.querySelector('button[type="submit"]');
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       errorEl.textContent = '';
+
+      // Si el honeypot trae contenido, es un bot: lo ignoramos.
+      var honey = form.querySelector('[name="email_address_check"]');
+      if (honey && honey.value) { return; }
+
       var email = document.getElementById('email').value.trim();
       var consent = document.getElementById('consent').checked;
       var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -436,10 +446,26 @@
       if (!emailOk) { errorEl.textContent = 'Introduce un correo electrónico válido.'; return; }
       if (!consent) { errorEl.textContent = 'Debes aceptar la política de privacidad para continuar.'; return; }
 
-      document.getElementById('formBlock').style.display = 'none';
-      document.getElementById('thanks').classList.add('show');
+      var prevText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando…';
+
+      var params = new URLSearchParams();
+      params.append('EMAIL', email);
+      params.append('email_address_check', '');
+      params.append('locale', 'es');
+
+      fetch(BREVO_ACTION, { method: 'POST', mode: 'no-cors', body: params })
+        .then(function () {
+          document.getElementById('formBlock').style.display = 'none';
+          document.getElementById('thanks').classList.add('show');
+        })
+        .catch(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = prevText;
+          errorEl.textContent = 'No se ha podido completar la suscripción. Inténtalo de nuevo en un momento.';
+        });
     });
   </script>
 </body>
 </html>
-
