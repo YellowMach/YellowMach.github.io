@@ -6,6 +6,23 @@
   <title>Ibergruas · Concesionario oficial JCB</title>
   <meta name="description" content="Suscríbete a la newsletter de Ibergruas, concesionario oficial JCB, y recibe noticias, novedades y promociones y descuentos exclusivos." />
 
+  <link rel="icon" type="image/png" href="images/logo.png" />
+
+  <!-- Vista previa al compartir el enlace (WhatsApp, Facebook, LinkedIn, etc.) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="Ibergruas" />
+  <meta property="og:url" content="https://yellowmach.github.io/" />
+  <meta property="og:title" content="Newsletter Ibergruas · Concesionario oficial JCB" />
+  <meta property="og:description" content="Suscríbete y recibe noticias, novedades y promociones y descuentos exclusivos de JCB." />
+  <meta property="og:image" content="https://yellowmach.github.io/images/jcb.jpg" />
+  <meta property="og:image:alt" content="Máquina JCB de Ibergruas" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Newsletter Ibergruas · Concesionario oficial JCB" />
+  <meta name="twitter:description" content="Suscríbete y recibe noticias, novedades y promociones y descuentos exclusivos de JCB." />
+  <meta name="twitter:image" content="https://yellowmach.github.io/images/jcb.jpg" />
+  <link rel="canonical" href="https://yellowmach.github.io/" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -60,6 +77,8 @@
       justify-content: center;
       padding: clamp(34px, 5vw, 66px) clamp(24px, 5vw, 64px);
       z-index: 2;
+      container-type: inline-size;
+      min-width: 0;
     }
     .hero__right {
       flex: 0 0 48%;
@@ -99,9 +118,13 @@
       text-transform: uppercase;
       color: var(--white);
       line-height: .98;
-      letter-spacing: 1px;
-      font-size: clamp(52px, 8.5vw, 104px);
+      letter-spacing: .5px;
+      /* Fallback seguro para navegadores antiguos */
+      font-size: clamp(34px, 6vw, 80px);
+      /* Escala según el ancho real de la columna: nunca se desborda */
+      font-size: clamp(30px, 14cqw, 96px);
       margin-bottom: 20px;
+      max-width: 100%;
     }
     .hero__lead {
       color: rgba(255,255,255,.92);
@@ -275,7 +298,6 @@
         clip-path: none;
         border-bottom: 5px solid var(--jcb-yellow);
       }
-      .hero h1 { font-size: clamp(48px, 16vw, 72px); }
       .features { grid-template-columns: 1fr; gap: 26px; }
       .feat:not(:first-child)::before {
         left: 0; right: 0; top: -13px; bottom: auto;
@@ -342,8 +364,8 @@
       <!-- Agradecimiento -->
       <div class="thanks" id="thanks">
         <div class="check">✓</div>
-        <h2 class="display">¡Gracias por suscribirte!</h2>
-        <p>Ya formas parte de la lista de Ibergruas. Pronto recibirás las primeras novedades, promociones y descuentos de JCB.</p>
+        <h2 class="display">¡Casi listo! Revisa tu correo</h2>
+        <p>Te hemos enviado un email para confirmar tu suscripción. Haz clic en el enlace que contiene (revisa también la carpeta de spam) y pasarás a formar parte de la lista de Ibergruas.</p>
       </div>
     </div>
 
@@ -420,3 +442,4 @@
   </script>
 </body>
 </html>
+
